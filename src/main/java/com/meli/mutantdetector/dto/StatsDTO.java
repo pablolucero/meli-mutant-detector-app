@@ -2,22 +2,23 @@ package com.meli.mutantdetector.dto;
 
 public class StatsDTO {
 
-    public long mutants;
-    public long notMutants;
-    public double ratio;
+    private long count_mutant_dna;
+    private long count_human_dna;
+    private double ratio;
 
-    public StatsDTO(long mutants, long notMutants, double ratio) {
-        this.mutants = mutants;
-        this.notMutants = notMutants;
+    public StatsDTO(long count_mutant_dna, long count_human_dna, double ratio) {
+
+        this.count_mutant_dna = count_mutant_dna;
+        this.count_human_dna = count_human_dna;
         this.ratio = ratio;
     }
 
-    public long getMutants() {
-        return mutants;
+    public long getCount_mutant_dna() {
+        return count_mutant_dna;
     }
 
-    public long getNotMutants() {
-        return notMutants;
+    public long getCount_human_dna() {
+        return count_human_dna;
     }
 
     public double getRatio() {

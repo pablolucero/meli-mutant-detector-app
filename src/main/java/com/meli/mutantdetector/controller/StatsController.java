@@ -1,6 +1,9 @@
 package com.meli.mutantdetector.controller;
 
 import com.meli.mutantdetector.dto.StatsDTO;
+import com.meli.mutantdetector.mapper.StatisticsMapper;
+import com.meli.mutantdetector.service.StatsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,9 +11,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class StatsController {
 
+    private StatsService statsService;
+
+    @Autowired
+    public StatsController(StatsService statsService) {
+        this.statsService = statsService;
+    }
+
     @RequestMapping(value = "/stats", method = RequestMethod.GET, produces = "application/json")
     public StatsDTO getMutantStatistics() {
-        return new StatsDTO(10, 5, 2);
+        return StatisticsMapper.map(statsService.calculateStats());
     }
 
 }

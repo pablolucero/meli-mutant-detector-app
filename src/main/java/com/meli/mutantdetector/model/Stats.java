@@ -3,45 +3,33 @@ package com.meli.mutantdetector.model;
 public class Stats {
 
     public long mutants;
-    public long notMutants;
-    public double ratio;
+    public long humans;
 
-    public Stats(long mutants, long notMutants, double ratio) {
+    public Stats(long mutants, long humans) {
         this.mutants = mutants;
-        this.notMutants = notMutants;
-        this.ratio = ratio;
+        this.humans = humans;
     }
 
-    public long getMutants() {
+    public long getMutantsCount() {
         return mutants;
     }
 
-    public void setMutants(long mutants) {
-        this.mutants = mutants;
-    }
-
-    public long getNotMutants() {
-        return notMutants;
-    }
-
-    public void setNotMutants(long notMutants) {
-        this.notMutants = notMutants;
+    public long getHumansCount() {
+        return humans;
     }
 
     public double getRatio() {
-        return ratio;
-    }
-
-    public void setRatio(double ratio) {
-        this.ratio = ratio;
+        if (humans <= 0 && mutants <= 0) return 0;
+        if (humans == 0) return 1;
+        return ((double) mutants / humans);
     }
 
     @Override
     public String toString() {
         return "Stats{" +
                 "mutants=" + mutants +
-                ", notMutants=" + notMutants +
-                ", ratio=" + ratio +
+                ", humans=" + humans +
+                ", ratio=" + getRatio() +
                 '}';
     }
 }
