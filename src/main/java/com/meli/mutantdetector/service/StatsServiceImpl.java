@@ -5,6 +5,7 @@ import com.meli.mutantdetector.repository.DnaResultRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,11 +23,18 @@ public class StatsServiceImpl implements StatsService {
     @Override
     public Stats calculateStats() {
 
-        log.info("Retrieving stats information");
+        long mutant = 0;
+        long humans = 0;
 
-        final long totalDnas = dnaResultRepository.count();
-        final long mutant = dnaResultRepository.countByIsMutant(true);
-        final long humans = totalDnas - mutant;
+        try {
+            final long totalDnas = dnaResultRepository.count();
+            mutant = dnaResultRepository.countByIsMutant(true);
+            humans = totalDnas - mutant;
+        } catch (DataAccessException e) {
+            log.error("An error occurred while accessing the data store", e.getMessage());
+        }
+
+        log.info("Retrieving stats information");
 
         return new Stats(mutant, humans);
     }
