@@ -17,12 +17,15 @@ public class MutantController {
     private MutantDetectorService mutantDetector;
 
     @RequestMapping(value = "/mutant", method = RequestMethod.POST, consumes = "application/json")
-    public ResponseEntity<HttpStatus> isMutant(@RequestBody DnaDTO dna) {
+    public ResponseEntity<String> isMutant(@RequestBody DnaDTO dna) {
 
-        System.out.println(dna.toString());
+        System.out.println(dna);
 
-        if (mutantDetector.isMutant(dna.getDna())) return ResponseEntity.ok(HttpStatus.OK);
-        else return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        try {
+            if (mutantDetector.isMutant(dna.getDna())) return ResponseEntity.ok("OK");
+            else return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
-
 }

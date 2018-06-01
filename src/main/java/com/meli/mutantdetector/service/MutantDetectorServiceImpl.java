@@ -20,7 +20,7 @@ public class MutantDetectorServiceImpl implements MutantDetectorService {
     }
 
     @Override
-    public boolean isMutant(List<String> dna) {
+    public boolean isMutant(List<String> dna) throws IllegalArgumentException {
 
         final boolean isMutant = DnaDetector.isMutantDna(dna);
         final DnaResult dnaResult = new DnaResult(dna.stream().collect(Collectors.joining("")), isMutant);
