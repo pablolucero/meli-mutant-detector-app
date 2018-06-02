@@ -42,11 +42,11 @@ public class DnaResult {
         this.dna = dna;
     }
 
-    public Boolean getMutant() {
+    public Boolean isMutant() {
         return isMutant;
     }
 
-    public void setMutant(Boolean mutant) {
+    public void setIsMutant(Boolean mutant) {
         isMutant = mutant;
     }
 

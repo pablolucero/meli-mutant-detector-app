@@ -10,6 +10,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,21 +27,23 @@ public class PersistenceServiceImpl implements PersistenceService {
 
     @Async
     @Override
-    public void persistDnaResult(List<String> dna, boolean isMutant) {
+    public CompletableFuture<DnaResult> persistDnaResult(List<String> dna, boolean isMutant) {
 
         final String dnaAsOneString = dna.stream().collect(Collectors.joining(""));
-        final DnaResult dnaResult = new DnaResult(dnaAsOneString, isMutant);
+        DnaResult dnaResult = dnaResultRepository.findByDna(dnaAsOneString);
 
-        if (dnaResultRepository.existsByDna(dnaAsOneString)) {
+        if (dnaResult != null) {
             log.info(String.format("Dna %s already exist in the db", dna));
         } else {
             try {
-                dnaResultRepository.save(dnaResult);
+                dnaResult = dnaResultRepository.save(new DnaResult(dnaAsOneString, isMutant));
                 log.info(String.format("Saved Dna: %s using async thread: %s", dna, Thread.currentThread()));
 
             } catch (DataAccessException e) {
                 log.error(String.format("Error occurred while executing async saving in thread %s", Thread.currentThread()));
             }
         }
+
+        return CompletableFuture.completedFuture(dnaResult);
     }
 }

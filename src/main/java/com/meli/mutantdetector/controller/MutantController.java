@@ -13,8 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MutantController {
 
-    @Autowired
     private MutantDetectorService mutantDetector;
+
+    @Autowired
+    public MutantController(MutantDetectorService mutantDetector) {
+        this.mutantDetector = mutantDetector;
+    }
 
     @RequestMapping(value = "/mutant", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<String> isMutant(@RequestBody DnaDTO dna) {

@@ -3,7 +3,6 @@ package com.meli.mutantdetector.controller;
 import com.meli.mutantdetector.dto.StatsDTO;
 import com.meli.mutantdetector.mapper.StatisticsMapper;
 import com.meli.mutantdetector.service.StatsService;
-import com.meli.mutantdetector.service.StatsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,7 +14,7 @@ public class StatsController {
     private StatsService statsService;
 
     @Autowired
-    public StatsController(StatsServiceImpl statsService) {
+    public StatsController(StatsService statsService) {
         this.statsService = statsService;
     }
 

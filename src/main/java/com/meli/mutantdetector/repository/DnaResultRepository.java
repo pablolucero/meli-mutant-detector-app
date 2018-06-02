@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DnaResultRepository extends JpaRepository<DnaResult, Long> {
 
-    boolean existsByDna(String dna);
+    DnaResult findByDna(String dna);
 
     Long countByIsMutant(boolean isMutant);
 }

@@ -4,7 +4,11 @@ import java.util.List;
 
 public class DnaDTO {
 
-    List<String> dna;
+    private List<String> dna;
+
+    public DnaDTO(List<String> dna) {
+        this.dna = dna;
+    }
 
     public List<String> getDna() {
         return dna;
