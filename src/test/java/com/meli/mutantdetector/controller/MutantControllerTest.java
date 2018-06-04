@@ -6,7 +6,6 @@ import com.meli.mutantdetector.service.MutantDetectorService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -45,7 +44,6 @@ public class MutantControllerTest extends MockRunnerBaseTest {
 
         verify(mutantDetector, times(1)).isMutant(testDnaMutant);
     }
-
 
     @Test
     public void isMutantTestHuman() {

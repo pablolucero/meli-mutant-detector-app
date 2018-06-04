@@ -28,15 +28,15 @@ public class StatsServiceImplTest extends MockRunnerBaseTest {
     @Test
     public void calculateStats() {
         //total dna count
-        when(dnaResultRepository.count()).thenReturn(110L);
+        when(dnaResultRepository.count()).thenReturn(100L);
         // mutant dna count
-        when(dnaResultRepository.countByIsMutant(true)).thenReturn(10L);
+        when(dnaResultRepository.countByIsMutant(true)).thenReturn(40L);
 
         Stats output = statsService.calculateStats();
 
         assertEquals(100, output.getHumansCount());
-        assertEquals(10, output.getMutantsCount());
-        assertEquals(0.1, output.getRatio(), 0.0);
+        assertEquals(40, output.getMutantsCount());
+        assertEquals(0.4, output.getRatio(), 0.0);
 
         verify(dnaResultRepository, times(1)).count();
         verify(dnaResultRepository, times(1)).countByIsMutant(true);
@@ -45,8 +45,7 @@ public class StatsServiceImplTest extends MockRunnerBaseTest {
     @Test
     public void getMutantStatisticsTestDataAccessException() {
 
-        when(dnaResultRepository.count()).thenThrow(new DataRetrievalFailureException("reason") {
-        });
+        when(dnaResultRepository.count()).thenThrow(new DataRetrievalFailureException("reason") {});
 
         statsService.calculateStats();
 

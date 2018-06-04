@@ -24,18 +24,17 @@ public class StatsServiceImpl implements StatsService {
     public Stats calculateStats() {
 
         long mutant = 0;
-        long humans = 0;
+        long totalDnas = 0;
 
         try {
-            final long totalDnas = dnaResultRepository.count();
+            totalDnas = dnaResultRepository.count();
             mutant = dnaResultRepository.countByIsMutant(true);
-            humans = totalDnas - mutant;
         } catch (DataAccessException e) {
             log.error("An error occurred while accessing the data store", e.getMessage());
         }
 
         log.info("Retrieving stats information");
 
-        return new Stats(mutant, humans);
+        return new Stats(mutant, totalDnas);
     }
 }

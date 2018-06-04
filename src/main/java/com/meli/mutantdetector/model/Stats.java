@@ -2,8 +2,8 @@ package com.meli.mutantdetector.model;
 
 public class Stats {
 
-    public long mutants;
-    public long humans;
+    private long mutants;
+    private long humans;
 
     public Stats(long mutants, long humans) {
         this.mutants = mutants;
